@@ -2,6 +2,7 @@
 using FeiraTech.Domain.Repositorie.User;
 using FeiraTech.Infrastructure.DataAcess;
 using FeiraTech.Infrastructure.DataAcess.Repositories;
+using FeiraTech.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,7 @@ namespace FeiraTech.Infrastructure
 
         public static void AddDbContext_MySql(IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("Database");
+            var connectionString = configuration.GetConnectionStringData();
             services.AddDbContext<FeiraTechDbContext>(options =>
             {
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));

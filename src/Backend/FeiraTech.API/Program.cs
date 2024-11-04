@@ -2,6 +2,8 @@ using FeiraTech.API.Filters;
 using FeiraTech.API.Middleware;
 using FeiraTech.Application;
 using FeiraTech.Infrastructure;
+using FeiraTech.Infrastructure.Extensions;
+using FeiraTech.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,4 +37,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+Migrate();
+
 app.Run();
+
+void Migrate()
+{
+    var connectionString  = builder.Configuration.GetConnectionStringData();
+    DatabaseMigrations.MigrateDatabase(connectionString);
+}
