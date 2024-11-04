@@ -1,11 +1,19 @@
 ﻿using Dapper;
+using FluentMigrator.Runner;
+using Microsoft.Extensions.DependencyInjection;
 using MySqlConnector;
 
 namespace FeiraTech.Infrastructure.Migrations
 {
     public static class DatabaseMigrations
     {
-        public static void MigrateDatabase(string connectionString)
+        public static void MigrateDatabase(string connectionString, IServiceProvider serviceProvider)
+        {
+            MigrateDatabaseMySql(connectionString);
+            MigrationRunner(connectionString, serviceProvider);
+        }
+
+        public static void MigrateDatabaseMySql(string connectionString)
         {
             var connectionStringBuilder = new MySqlConnectionStringBuilder(connectionString);
             //pega o nome do banco de dados
@@ -25,6 +33,13 @@ namespace FeiraTech.Infrastructure.Migrations
             {
                 connection.Execute($"CREATE DATABASE {databaseName}");
             }
+        }
+
+        private static void MigrationRunner(string connectionString, IServiceProvider serviceProvider)
+        {
+            var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
+            runner.ListMigrations();
+            runner.MigrateUp();
         }
     }
 }
