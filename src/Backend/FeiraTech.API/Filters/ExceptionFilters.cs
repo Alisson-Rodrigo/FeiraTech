@@ -34,7 +34,7 @@ namespace FeiraTech.API.Filters
 
                 //Retornar um BadRequest com a lista de erros
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                context.Result = new BadRequestObjectResult(new ResponseErrosJson(exception.ErrorsMessages));
+                context.Result = new BadRequestObjectResult(new ResponseErrosJson(exception!.ErrorsMessages));
             }
         }
 

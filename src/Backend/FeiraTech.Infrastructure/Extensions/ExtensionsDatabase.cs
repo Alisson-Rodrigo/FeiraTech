@@ -6,7 +6,7 @@ namespace FeiraTech.Infrastructure.Extensions
     {
         public static string GetConnectionStringData(this IConfiguration configuration)
         {
-            return configuration.GetConnectionString("feiratech")!;
+            return configuration.GetConnectionString("Database")!;
         }
     }
 }
